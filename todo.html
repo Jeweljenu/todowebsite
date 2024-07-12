@@ -9,11 +9,11 @@
     <style>
         body {
             background-color: #f8f9fa;
-            background-image: url('https://source.unsplash.com/random'); /* Replace with your background image URL */
+            background-image: url('https://img.freepik.com/premium-photo/creative-workspace-with-sticky-note-houseplant-supplies_35674-9406.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            animation: backgroundAnimation 30s linear infinite; /* Animation duration and timing */
+            animation: backgroundAnimation 30s linear infinite;
         }
  
         @keyframes backgroundAnimation {
@@ -114,8 +114,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Custom JavaScript -->
     <script>
-        // Define a variable to store todos (dummy data)
-        let todos = [];
+        // Function to retrieve todos from localStorage
+        function getTodos() {
+            return JSON.parse(localStorage.getItem('todos')) || [];
+        }
+ 
+        // Function to save todos to localStorage
+        function saveTodos(todos) {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+ 
+        // Define a variable to store todos (retrieve from localStorage)
+        let todos = getTodos();
  
         // Function to render todos
         function renderTodos() {
@@ -146,18 +156,21 @@
         // Function to add a new todo
         function addTodo(text) {
             todos.push({ text: text, done: false });
+            saveTodos(todos); // Save todos to localStorage
             renderTodos();
         }
  
         // Function to mark a todo as done
         function markDone(index) {
             todos[index].done = true;
+            saveTodos(todos); // Save todos to localStorage
             renderTodos();
         }
  
         // Function to delete a todo
         function deleteTodo(index) {
             todos.splice(index, 1);
+            saveTodos(todos); // Save todos to localStorage
             renderTodos();
         }
  
